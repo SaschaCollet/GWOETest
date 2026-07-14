@@ -29,6 +29,24 @@ Deployment nötig, lokale Vorschau im Browser reicht. Sprache: nur Deutsch, kein
 - Ein Commit pro abgeschlossenem Arbeitsschritt
 - `.env` enthält den Storyblok-Preview-Token, wird nie committed
 
+## Einmalige Einrichtung: lokales HTTPS-Zertifikat
+
+Der Dev-Server läuft über HTTPS (`vite-plugin-mkcert`), das der Storyblok Visual Editor
+im iframe benötigt. Beim allerersten `astro dev` fragt macOS per `sudo`-Prompt, ob das
+lokale mkcert-Root-Zertifikat der Keychain vertraut werden soll — das funktioniert nur
+in einem echten Terminal mit TTY, nicht aus einer Agent-Sandbox heraus. Bitte einmalig
+manuell im eigenen Terminal ausführen:
+
+```
+npx astro dev
+```
+
+Danach den `sudo`-Passwort-Prompt bestätigen. Ab dann läuft `astro dev --background`
+auch automatisiert, weil das Zertifikat bereits vertraut ist.
+
+**Preview-URL in Storyblok eintragen:** Nach dem ersten Start unter *Space Settings →
+Visual Editor → Preview URL* `https://localhost:4321/` (Port ggf. anpassen) eintragen.
+
 ## Development
 
 When starting the dev server, use background mode:
