@@ -33,6 +33,22 @@ const kpis = [
   kpis={kpis}
 />
 <main id="main-content" {...storyblokEditable(blok)}>
-  {blok.body?.map((nestedBlok: any) => <StoryblokComponent blok={nestedBlok} />)}
+  {
+    blok.body?.map((nestedBlok: any) =>
+      /*
+       * Optionales "anchor"-Feld an einem Blok (z. B. auf dem KPI-Raster oder der
+       * Wesentlichkeitsmatrix, siehe docs/storyblok-setup.md) erzeugt ein Kapitel-Sprungziel
+       * für die Navigation/HeroOverview-Links — generisch, ohne Änderung am jeweiligen
+       * Baustein selbst.
+       */
+      nestedBlok.anchor ? (
+        <div id={nestedBlok.anchor}>
+          <StoryblokComponent blok={nestedBlok} />
+        </div>
+      ) : (
+        <StoryblokComponent blok={nestedBlok} />
+      ),
+    )
+  }
 </main>
 <Footer />
