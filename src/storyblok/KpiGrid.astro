@@ -1,0 +1,46 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+
+interface Props {
+  blok: {
+    title?: string;
+    cards?: Array<{ _uid: string; [key: string]: unknown }>;
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+---
+
+<section {...storyblokEditable(blok)} class="kpi-grid container">
+  {blok.title && <h2>{blok.title}</h2>}
+  <div class="kpi-grid__cards">
+    {blok.cards?.map((card) => <StoryblokComponent blok={card} />)}
+  </div>
+</section>
+
+<style>
+  .kpi-grid {
+    padding-block: var(--space-12);
+  }
+
+  .kpi-grid__cards {
+    margin-top: var(--space-6);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .kpi-grid__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .kpi-grid__cards {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
