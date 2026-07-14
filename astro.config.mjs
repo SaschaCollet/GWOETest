@@ -25,6 +25,8 @@ export default defineConfig({
         accordion_item: 'storyblok/AccordionItem',
         timeline: 'storyblok/Timeline',
         timeline_item: 'storyblok/TimelineItem',
+        materiality_matrix: 'storyblok/MaterialityMatrix',
+        matrix_topic: 'storyblok/MatrixTopic',
       },
       // Fängt Bloks aus altem Space-Startinhalt (z. B. "grid"/"feature") ab, die wir in
       // diesem Template nicht bauen — verhindert einen Build-Abbruch statt Fehler zu werfen.

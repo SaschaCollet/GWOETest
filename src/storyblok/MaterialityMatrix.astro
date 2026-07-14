@@ -1,0 +1,191 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+
+interface Props {
+  blok: {
+    title?: string;
+    x_axis_label?: string;
+    y_axis_label?: string;
+    topics?: Array<{ _uid: string; name: string; [key: string]: unknown }>;
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+const topics = blok.topics ?? [];
+---
+
+<section {...storyblokEditable(blok)} class="materiality container">
+  {blok.title && <h2>{blok.title}</h2>}
+
+  <div class="materiality__layout">
+    <div class="materiality__chart-wrap">
+      <div class="materiality__chart">
+        <div class="materiality__grid" aria-hidden="true"></div>
+        {topics.map((topic) => <StoryblokComponent blok={topic} />)}
+      </div>
+      {
+        blok.y_axis_label && (
+          <span class="materiality__axis materiality__axis--y">{blok.y_axis_label}</span>
+        )
+      }
+      {
+        blok.x_axis_label && (
+          <span class="materiality__axis materiality__axis--x">{blok.x_axis_label}</span>
+        )
+      }
+    </div>
+
+    <div class="materiality__detail" id="materiality-detail" aria-live="polite">
+      <p class="materiality__detail-placeholder">Thema auswählen, um Details zu sehen.</p>
+    </div>
+  </div>
+
+  <ul role="list" class="materiality__legend">
+    {
+      topics.map((topic) => (
+        <li>
+          <button type="button" class="materiality__legend-item" data-matrix-topic={topic._uid}>
+            {topic.name}
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .materiality {
+    padding-block: var(--space-12);
+  }
+
+  .materiality__layout {
+    margin-top: var(--space-8);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .materiality__chart-wrap {
+    position: relative;
+    padding-inline-start: var(--space-8);
+    padding-block-end: var(--space-8);
+  }
+
+  .materiality__chart {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .materiality__grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+        to right,
+        transparent calc(50% - 1px),
+        var(--color-border) calc(50% - 1px),
+        var(--color-border) calc(50% + 1px),
+        transparent calc(50% + 1px)
+      ),
+      linear-gradient(
+        to bottom,
+        transparent calc(50% - 1px),
+        var(--color-border) calc(50% - 1px),
+        var(--color-border) calc(50% + 1px),
+        transparent calc(50% + 1px)
+      );
+  }
+
+  .materiality__axis {
+    position: absolute;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .materiality__axis--x {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .materiality__axis--y {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: center;
+    white-space: nowrap;
+  }
+
+  .materiality__detail {
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    min-height: 8rem;
+  }
+
+  .materiality__detail-placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .materiality__legend {
+    margin-top: var(--space-6);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .materiality__legend-item {
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--color-background);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+  }
+
+  .materiality__legend-item:hover,
+  .materiality__legend-item:focus-visible {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  @media (min-width: 1024px) {
+    .materiality__layout {
+      grid-template-columns: 2fr 1fr;
+      align-items: start;
+    }
+  }
+</style>
+
+<script>
+  const detail = document.getElementById('materiality-detail');
+  const triggers = document.querySelectorAll<HTMLElement>('[data-matrix-topic]');
+
+  function activate(id: string) {
+    const template = document.querySelector<HTMLTemplateElement>(
+      `template[data-matrix-template="${id}"]`,
+    );
+    if (!template || !detail) return;
+
+    detail.replaceChildren(template.content.cloneNode(true));
+
+    triggers.forEach((el) => {
+      if (el.hasAttribute('aria-expanded')) {
+        el.setAttribute('aria-expanded', String(el.dataset.matrixTopic === id));
+      }
+    });
+  }
+
+  triggers.forEach((el) => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.matrixTopic;
+      if (id) activate(id);
+    });
+  });
+</script>
