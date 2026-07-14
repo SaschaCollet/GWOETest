@@ -13,6 +13,10 @@ export default defineConfig({
       accessToken: env.STORYBLOK_TOKEN,
       apiOptions: {
         region: 'eu',
+        // storyblok-js-client cached CDN-Antworten sonst im Prozessspeicher — Änderungen
+        // im Space wären erst nach einem Neustart von astro dev sichtbar. Für den
+        // Testlauf-Charakter (Draft-Vorschau) soll jeder Reload den aktuellen Stand zeigen.
+        cache: { type: 'none' },
       },
       components: {
         page: 'storyblok/Page',
