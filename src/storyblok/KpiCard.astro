@@ -1,0 +1,147 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+
+interface Props {
+  blok: {
+    label: string;
+    value: string;
+    unit?: string;
+    previous_value?: string;
+    trend?: 'up' | 'down' | 'neutral';
+    link_target?: string;
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+const trend = blok.trend ?? 'neutral';
+const trendSymbol = trend === 'up' ? '↑' : trend === 'down' ? '↓' : '→';
+const trendLabel =
+  trend === 'up' ? 'Steigend' : trend === 'down' ? 'Sinkend' : 'Unverändert';
+
+const Tag = blok.link_target ? 'a' : 'div';
+const numericValue = parseFloat(String(blok.value).replace(/\./g, '').replace(',', '.'));
+---
+
+<Tag
+  {...storyblokEditable(blok)}
+  class="kpi-card"
+  href={blok.link_target || undefined}
+  data-kpi-value={Number.isFinite(numericValue) ? numericValue : undefined}
+>
+  <span class="kpi-card__value">
+    <span class="kpi-card__number" data-kpi-number>{blok.value}</span>
+    {blok.unit && <span class="kpi-card__unit">{blok.unit}</span>}
+  </span>
+  <span class="kpi-card__label">{blok.label}</span>
+  {
+    blok.previous_value && (
+      <span class="kpi-card__trend" data-trend={trend}>
+        <span aria-hidden="true">{trendSymbol}</span>
+        <span class="visually-hidden">{trendLabel},</span>
+        Vorjahr: {blok.previous_value}
+        {blok.unit}
+      </span>
+    )
+  }
+</Tag>
+
+<style>
+  .kpi-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  a.kpi-card:hover,
+  a.kpi-card:focus-visible {
+    box-shadow: var(--shadow-md);
+  }
+
+  .kpi-card__value {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-1);
+    font-family: var(--font-heading);
+  }
+
+  .kpi-card__number {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary);
+  }
+
+  .kpi-card__unit {
+    font-size: var(--font-size-lg);
+    color: var(--color-primary);
+  }
+
+  .kpi-card__label {
+    color: var(--color-text-muted);
+  }
+
+  .kpi-card__trend {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .kpi-card__trend[data-trend='up'] {
+    color: var(--color-success);
+  }
+
+  .kpi-card__trend[data-trend='down'] {
+    color: var(--color-danger);
+  }
+</style>
+
+<script>
+  /**
+   * Zähl-Animation nur für sichtbare Karten (IntersectionObserver statt client:visible,
+   * da das Projekt ohne UI-Framework-Integration auskommt — reines Astro + Vanilla-JS).
+   */
+  function animateNumber(el: HTMLElement) {
+    const target = Number(el.closest('[data-kpi-value]')?.getAttribute('data-kpi-value'));
+    if (!Number.isFinite(target)) return;
+
+    const original = el.textContent ?? '';
+    const duration = 900;
+    const start = performance.now();
+
+    function tick(now: number) {
+      const progress = Math.min(1, (now - start) / duration);
+      const current = target * progress;
+      el.textContent = progress < 1 ? formatNumber(current, original) : original;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+
+    function formatNumber(value: number, formatLike: string) {
+      const hasDecimal = formatLike.includes(',');
+      return hasDecimal
+        ? value.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+        : Math.round(value).toLocaleString('de-DE');
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          animateNumber(entry.target as HTMLElement);
+          obs.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0.4 },
+  );
+
+  document.querySelectorAll<HTMLElement>('[data-kpi-number]').forEach((el) => {
+    if (el.closest('[data-kpi-value]')) observer.observe(el);
+  });
+</script>
