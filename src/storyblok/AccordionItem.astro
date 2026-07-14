@@ -1,0 +1,44 @@
+---
+import { storyblokEditable, renderRichText } from '@storyblok/astro';
+
+interface Props {
+  blok: {
+    title: string;
+    content?: unknown;
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+const html = blok.content ? renderRichText(blok.content as never) : '';
+---
+
+<details {...storyblokEditable(blok)} class="accordion-item">
+  <summary class="accordion-item__summary">{blok.title}</summary>
+  <div class="accordion-item__content" set:html={html} />
+</details>
+
+<style>
+  .accordion-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .accordion-item__summary {
+    padding-block: var(--space-4);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .accordion-item__summary::marker {
+    color: var(--color-primary);
+  }
+
+  .accordion-item__content {
+    padding-bottom: var(--space-4);
+    color: var(--color-text-muted);
+  }
+
+  .accordion-item__content :global(p) {
+    margin: 0 0 var(--space-2);
+  }
+</style>

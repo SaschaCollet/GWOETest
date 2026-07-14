@@ -21,6 +21,8 @@ export default defineConfig({
         kpi_card: 'storyblok/KpiCard',
         kpi_grid: 'storyblok/KpiGrid',
         chart_embed: 'storyblok/ChartEmbed',
+        accordion: 'storyblok/Accordion',
+        accordion_item: 'storyblok/AccordionItem',
       },
       // Fängt Bloks aus altem Space-Startinhalt (z. B. "grid"/"feature") ab, die wir in
       // diesem Template nicht bauen — verhindert einen Build-Abbruch statt Fehler zu werfen.

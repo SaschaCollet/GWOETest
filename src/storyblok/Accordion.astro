@@ -1,0 +1,32 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+
+interface Props {
+  blok: {
+    title?: string;
+    items?: Array<{ _uid: string; [key: string]: unknown }>;
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+---
+
+<section {...storyblokEditable(blok)} class="accordion container">
+  {blok.title && <h2>{blok.title}</h2>}
+  <div class="accordion__items">
+    {blok.items?.map((item) => <StoryblokComponent blok={item} />)}
+  </div>
+</section>
+
+<style>
+  .accordion {
+    padding-block: var(--space-12);
+  }
+
+  .accordion__items {
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+</style>
