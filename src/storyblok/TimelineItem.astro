@@ -1,0 +1,64 @@
+---
+import { storyblokEditable, renderRichText } from '@storyblok/astro';
+
+interface Props {
+  blok: {
+    year: string;
+    title: string;
+    description?: unknown;
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+const html = blok.description ? renderRichText(blok.description as never) : '';
+---
+
+<li {...storyblokEditable(blok)} class="timeline-item">
+  <span class="timeline-item__year">{blok.year}</span>
+  <div class="timeline-item__body">
+    <h3>{blok.title}</h3>
+    <div class="timeline-item__description" set:html={html} />
+  </div>
+</li>
+
+<style>
+  .timeline-item {
+    position: relative;
+    padding-inline-start: var(--space-8);
+    padding-block-end: var(--space-8);
+    border-inline-start: 2px solid var(--color-border);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -0.4375rem;
+    top: 0.35rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+  }
+
+  .timeline-item__year {
+    display: inline-block;
+    margin-bottom: var(--space-1);
+    font-family: var(--font-heading);
+    font-weight: bold;
+    color: var(--color-primary);
+  }
+
+  .timeline-item__body h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-1);
+  }
+
+  .timeline-item__description {
+    color: var(--color-text-muted);
+  }
+
+  .timeline-item__description :global(p) {
+    margin: 0;
+  }
+</style>

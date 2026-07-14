@@ -1,0 +1,32 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+
+interface Props {
+  blok: {
+    title?: string;
+    items?: Array<{ _uid: string; [key: string]: unknown }>;
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+---
+
+<section {...storyblokEditable(blok)} class="timeline container">
+  {blok.title && <h2>{blok.title}</h2>}
+  <ol role="list" class="timeline__list">
+    {blok.items?.map((item) => <StoryblokComponent blok={item} />)}
+  </ol>
+</section>
+
+<style>
+  .timeline {
+    padding-block: var(--space-12);
+  }
+
+  .timeline__list {
+    margin-top: var(--space-6);
+    max-width: 40rem;
+  }
+</style>

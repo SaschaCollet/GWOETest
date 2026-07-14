@@ -23,6 +23,8 @@ export default defineConfig({
         chart_embed: 'storyblok/ChartEmbed',
         accordion: 'storyblok/Accordion',
         accordion_item: 'storyblok/AccordionItem',
+        timeline: 'storyblok/Timeline',
+        timeline_item: 'storyblok/TimelineItem',
       },
       // Fängt Bloks aus altem Space-Startinhalt (z. B. "grid"/"feature") ab, die wir in
       // diesem Template nicht bauen — verhindert einen Build-Abbruch statt Fehler zu werfen.
