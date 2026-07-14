@@ -104,9 +104,11 @@ const numericValue = parseFloat(String(blok.value).replace(/\./g, '').replace(',
    * Zähl-Animation nur für sichtbare Karten (IntersectionObserver statt client:visible,
    * da das Projekt ohne UI-Framework-Integration auskommt — reines Astro + Vanilla-JS).
    */
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function animateNumber(el: HTMLElement) {
     const target = Number(el.closest('[data-kpi-value]')?.getAttribute('data-kpi-value'));
-    if (!Number.isFinite(target)) return;
+    if (!Number.isFinite(target) || prefersReducedMotion) return;
 
     const original = el.textContent ?? '';
     const duration = 900;

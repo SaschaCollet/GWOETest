@@ -32,7 +32,7 @@ const kpis = [
   subtitle="Florawerk GmbH — Verantwortung für Boden, Klima und Menschen"
   kpis={kpis}
 />
-<main id="main-content" {...storyblokEditable(blok)}>
+<main id="main-content" tabindex="-1" {...storyblokEditable(blok)}>
   {
     blok.body?.map((nestedBlok: any) =>
       /*

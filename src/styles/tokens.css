@@ -8,11 +8,12 @@
   --color-primary: #2f6d4f;
   --color-primary-dark: #1f4d38;
   --color-primary-light: #e5f0ea;
-  --color-secondary: #a8763e;
+  /* Auf WCAG-AA-Textkontrast (4.5:1) gegen --color-background geprüft */
+  --color-secondary: #9b6d39;
   --color-accent: #3d7ea6;
 
   --color-success: #2f6d4f;
-  --color-warning: #b8860b;
+  --color-warning: #996f09;
   --color-danger: #b3421f;
 
   --color-neutral-0: #ffffff;
@@ -81,5 +82,9 @@
     --color-surface: var(--color-neutral-800);
     --color-border: var(--color-neutral-600);
     --color-primary-light: var(--color-neutral-800);
+
+    /* Aufgehellt: #2f6d4f fällt auf dunklem Hintergrund unter 4.5:1 Textkontrast */
+    --color-primary: #4db281;
+    --color-success: #4db281;
   }
 }
