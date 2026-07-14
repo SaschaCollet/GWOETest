@@ -5,14 +5,14 @@
  */
 :root {
   /* Farben — HIER Kundenfarben eintragen */
-  --color-primary: #2f6d4f;
-  --color-primary-dark: #1f4d38;
-  --color-primary-light: #e5f0ea;
+  --color-primary: #1f6f78;
+  --color-primary-dark: #154e54;
+  --color-primary-light: #e3eef0;
   /* Auf WCAG-AA-Textkontrast (4.5:1) gegen --color-background geprüft */
-  --color-secondary: #9b6d39;
+  --color-secondary: #ad6524;
   --color-accent: #3d7ea6;
 
-  --color-success: #2f6d4f;
+  --color-success: #1f6f78;
   --color-warning: #996f09;
   --color-danger: #b3421f;
 
@@ -83,8 +83,8 @@
     --color-border: var(--color-neutral-600);
     --color-primary-light: var(--color-neutral-800);
 
-    /* Aufgehellt: #2f6d4f fällt auf dunklem Hintergrund unter 4.5:1 Textkontrast */
-    --color-primary: #4db281;
-    --color-success: #4db281;
+    /* Aufgehellt: #1f6f78 fällt auf dunklem Hintergrund unter 4.5:1 Textkontrast */
+    --color-primary: #34bbcb;
+    --color-success: #34bbcb;
   }
 }
