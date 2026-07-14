@@ -17,6 +17,7 @@ export default defineConfig({
       components: {
         page: 'storyblok/Page',
         teaser: 'storyblok/Teaser',
+        statement: 'storyblok/Statement',
       },
       // Fängt Bloks aus altem Space-Startinhalt (z. B. "grid"/"feature") ab, die wir in
       // diesem Template nicht bauen — verhindert einen Build-Abbruch statt Fehler zu werfen.

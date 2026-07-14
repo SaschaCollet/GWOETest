@@ -1,0 +1,77 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+
+interface Props {
+  blok: {
+    quote: string;
+    author?: string;
+    author_role?: string;
+    image?: { filename?: string; alt?: string };
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+---
+
+<section {...storyblokEditable(blok)} class="statement container">
+  <blockquote class="statement__quote">
+    <p>{blok.quote}</p>
+    {
+      (blok.author || blok.author_role) && (
+        <footer class="statement__footer">
+          {blok.image?.filename && (
+            <img class="statement__avatar" src={blok.image.filename} alt={blok.image.alt ?? ''} width="56" height="56" />
+          )}
+          <cite class="statement__cite">
+            {blok.author}
+            {blok.author_role && <span class="statement__role"> — {blok.author_role}</span>}
+          </cite>
+        </footer>
+      )
+    }
+  </blockquote>
+</section>
+
+<style>
+  .statement {
+    padding-block: var(--space-16);
+  }
+
+  .statement__quote {
+    margin: 0;
+    max-width: 44rem;
+    border-inline-start: 4px solid var(--color-primary);
+    padding-inline-start: var(--space-6);
+  }
+
+  .statement__quote p {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+  }
+
+  .statement__footer {
+    margin-top: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .statement__avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+  }
+
+  .statement__cite {
+    font-style: normal;
+    color: var(--color-text-muted);
+  }
+
+  .statement__role {
+    color: var(--color-text-muted);
+  }
+</style>
