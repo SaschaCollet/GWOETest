@@ -1,6 +1,7 @@
 ---
 import { useStoryblokApi } from '@storyblok/astro';
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
   const storyblokApi = useStoryblokApi();
@@ -17,14 +18,8 @@ export async function getStaticPaths() {
 const { story } = Astro.props;
 ---
 
-<!doctype html>
-<html lang="de">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{story.name}</title>
-  </head>
-  <body>
+<BaseLayout title={story.name}>
+  <div id="main-content">
     <StoryblokComponent blok={story.content} />
-  </body>
-</html>
+  </div>
+</BaseLayout>
