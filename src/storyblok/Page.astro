@@ -1,10 +1,38 @@
 ---
 import { storyblokEditable } from '@storyblok/astro';
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+import Navigation from '../components/Navigation.astro';
+import HeroOverview from '../components/HeroOverview.astro';
+import Footer from '../components/Footer.astro';
 
 const { blok } = Astro.props;
+
+/**
+ * Rahmen/Shell ist nicht CMS-gebunden (siehe AGENTS.md) und daher hier fest verdrahtet
+ * statt aus Storyblok-Feldern gelesen. Passt zum Testlauf-Charakter: ein durchgehender
+ * Bericht mit Anker-Kapiteln statt mehrerer separater Stories.
+ */
+const chapters = [
+  { id: 'klima', label: 'Klima' },
+  { id: 'mitarbeitende', label: 'Mitarbeitende' },
+  { id: 'matrix', label: 'Wesentlichkeit' },
+];
+
+const kpis = [
+  { label: 'CO₂-Emissionen (Scope 1+2)', value: '1.240 t', href: '#klima' },
+  { label: 'Anteil torffreie Substrate', value: '78 %', href: '#klima' },
+  { label: 'Mitarbeitende mit Weiterbildung', value: '92 %', href: '#mitarbeitende' },
+  { label: 'Frauenanteil in Führungspositionen', value: '41 %', href: '#mitarbeitende' },
+];
 ---
 
-<main {...storyblokEditable(blok)}>
+<Navigation chapters={chapters} />
+<HeroOverview
+  title="Nachhaltigkeitsbericht 2025"
+  subtitle="Florawerk GmbH — Verantwortung für Boden, Klima und Menschen"
+  kpis={kpis}
+/>
+<main id="main-content" {...storyblokEditable(blok)}>
   {blok.body?.map((nestedBlok: any) => <StoryblokComponent blok={nestedBlok} />)}
 </main>
+<Footer />

@@ -1,0 +1,44 @@
+---
+---
+
+<div class="scroll-progress" role="presentation">
+  <div class="scroll-progress__bar" id="scroll-progress-bar"></div>
+</div>
+
+<style>
+  .scroll-progress {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: 3px;
+    background: var(--color-border);
+  }
+
+  .scroll-progress__bar {
+    height: 100%;
+    width: 0%;
+    background: var(--color-primary);
+    transform-origin: left;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-progress__bar {
+      transition: width 0.1s linear;
+    }
+  }
+</style>
+
+<script>
+  const bar = document.getElementById('scroll-progress-bar');
+
+  function updateProgress() {
+    if (!bar) return;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+  }
+
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+</script>

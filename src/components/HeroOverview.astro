@@ -1,0 +1,96 @@
+---
+interface Kpi {
+  label: string;
+  value: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  kpis: Kpi[];
+}
+
+const { title, subtitle, kpis } = Astro.props;
+---
+
+<section class="hero" aria-label="Auf einen Blick">
+  <div class="container">
+    <h1>{title}</h1>
+    {subtitle && <p class="hero__subtitle">{subtitle}</p>}
+
+    <ul role="list" class="hero__grid">
+      {
+        kpis.map((kpi) => (
+          <li>
+            <a class="hero__kpi" href={kpi.href}>
+              <span class="hero__kpi-value">{kpi.value}</span>
+              <span class="hero__kpi-label">{kpi.label}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-12) var(--space-16);
+  }
+
+  .hero__subtitle {
+    margin-top: var(--space-2);
+    max-width: 40rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-lg);
+  }
+
+  .hero__grid {
+    margin-top: var(--space-8);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .hero__kpi {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .hero__kpi:hover,
+  .hero__kpi:focus-visible {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .hero__kpi-value {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary);
+  }
+
+  .hero__kpi-label {
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 640px) {
+    .hero__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

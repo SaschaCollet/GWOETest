@@ -19,7 +19,5 @@ const { story } = Astro.props;
 ---
 
 <BaseLayout title={story.name}>
-  <div id="main-content">
-    <StoryblokComponent blok={story.content} />
-  </div>
+  <StoryblokComponent blok={story.content} />
 </BaseLayout>
