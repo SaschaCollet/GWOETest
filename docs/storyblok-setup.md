@@ -106,8 +106,8 @@ löschen und folgende Bloks in dieser Reihenfolge in `body` hinzufügen (Inhalte
 
 1. **statement** — Intro-Zitat (Dr. Miriam Vogt)
 2. **kpi_grid** „Klimabilanz 2025" (4× `kpi_card`) — **`anchor` = `klima`**
-3. **chart_embed** „CO₂-Verlauf 2021–2025" (Embed-Code erst in Schritt 9 verfügbar, bis
-   dahin leer lassen — Baustein zeigt automatisch einen Platzhalter)
+3. **chart_embed** „CO₂-Verlauf 2021–2025" — `embed_code` mit dem Datawrapper-Embed aus
+   Abschnitt 5 befüllen
 4. **timeline** „Meilensteine Klimastrategie" (5 Einträge 2021–2025)
 5. **accordion** „Häufige Fragen zur Klimabilanz" (3 Einträge)
 6. **kpi_grid** „Team 2025" (4× `kpi_card`) — **`anchor` = `mitarbeitende`**
@@ -132,7 +132,21 @@ genannten Bloks zu setzen. Kein Code-Änderung pro Baustein nötig.
 
 ---
 
-## 4. Veröffentlichen & prüfen
+## 5. Datawrapper-Embed für `chart_embed`
+
+Fertiges Diagramm „Indirekte CO₂-Emissionen in t" — responsiver Embed-Code für das
+`embed_code`-Feld (Textarea) des `chart_embed`-Bloks aus Abschnitt 2, Punkt 3:
+
+```html
+<iframe title="Indirekte CO2-Emissionen in t" aria-label="Tabelle" id="datawrapper-chart-sGeoJ" src="https://datawrapper.dwcdn.net/sGeoJ/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="405" data-external="1"></iframe><script type="text/javascript">(function(){function e(){window.addEventListener(`message`,function(e){if(e.data[`datawrapper-height`]!==void 0){var t=document.querySelectorAll(`iframe`);for(var n in e.data[`datawrapper-height`])for(var r=0,i;i=t[r];r++)if(i.contentWindow===e.source){var a=e.data[`datawrapper-height`][n]+`px`;i.style.height=a}}})}e()})();</script>
+```
+
+Das eingebettete `<script>` hört auf `postMessage`-Events von Datawrapper und passt die
+iframe-Höhe live an (verhindert Layout-Sprünge/abgeschnittene Inhalte bei
+Inhaltsänderungen). `src/storyblok/ChartEmbed.astro` reserviert bis dahin per
+`min-height` Platz und schneidet die iframe-Höhe **nicht** per CSS ab.
+
+## 6. Veröffentlichen & prüfen
 
 - Story **Publish** (oder als Draft belassen — die App liest hier `version: draft`,
   Preview funktioniert auch unveröffentlicht)

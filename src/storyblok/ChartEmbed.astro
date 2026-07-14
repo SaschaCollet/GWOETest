@@ -39,17 +39,14 @@ const { blok } = Astro.props;
 
   .chart-embed__frame {
     margin-top: var(--space-4);
+    /* Reserviert Platz, bevor Datawrapper per postMessage die reale Höhe setzt (CLS-Schutz).
+       Kein aspect-ratio/overflow:hidden hier — Datawrapper setzt die iframe-Höhe dynamisch
+       per Inline-Style, das würde sonst abgeschnitten. */
     min-height: 20rem;
-    aspect-ratio: 16 / 9;
-    background: var(--color-surface);
-    border-radius: var(--radius-md);
-    overflow: hidden;
   }
 
   .chart-embed__frame :global(iframe) {
-    width: 100%;
-    height: 100%;
-    border: 0;
+    display: block;
   }
 
   .chart-embed__placeholder {
