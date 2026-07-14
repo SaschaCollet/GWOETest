@@ -14,7 +14,9 @@ interface Props {
 }
 
 const { blok } = Astro.props;
-const trend = blok.trend ?? 'neutral';
+// Storyblok liefert ein leeres Single-Option-Feld als "" statt undefined/null — ?? greift
+// dabei nicht, deshalb hier bewusst || statt ??.
+const trend = blok.trend || 'neutral';
 const trendSymbol = trend === 'up' ? '↑' : trend === 'down' ? '↓' : '→';
 const trendLabel =
   trend === 'up' ? 'Steigend' : trend === 'down' ? 'Sinkend' : 'Unverändert';
