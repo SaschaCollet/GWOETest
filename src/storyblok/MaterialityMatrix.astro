@@ -157,7 +157,9 @@ const topics = blok.topics ?? [];
 
   @media (min-width: 1024px) {
     .materiality__layout {
-      grid-template-columns: 2fr 1fr;
+      /* minmax(0, ...) statt bloßem fr: verhindert, dass eine Spalte durch langen
+         Detail-Text über ihren fr-Anteil hinauswächst und die Matrix-Spalte staucht. */
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
       align-items: start;
     }
   }
