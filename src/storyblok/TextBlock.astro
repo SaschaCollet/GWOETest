@@ -1,0 +1,48 @@
+---
+import { storyblokEditable, renderRichText } from '@storyblok/astro';
+
+interface Props {
+  blok: {
+    title?: string;
+    content?: unknown;
+    width?: 'narrow' | 'full';
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+const html = blok.content ? renderRichText(blok.content as never) : '';
+// Storyblok liefert ein leeres Single-Option-Feld als "" statt undefined/null —
+// deshalb bewusst || statt ?? (gleicher Fallstrick wie bei KpiCard.astro's trend-Feld).
+const width = blok.width || 'narrow';
+---
+
+<section {...storyblokEditable(blok)} class="text-block container">
+  <div class={`text-block__inner text-block__inner--${width}`}>
+    {blok.title && <h2>{blok.title}</h2>}
+    <div class="text-block__content" set:html={html} />
+  </div>
+</section>
+
+<style>
+  .text-block {
+    padding-block: var(--space-12);
+  }
+
+  .text-block__inner--narrow {
+    max-width: 44rem;
+  }
+
+  .text-block__inner--full {
+    max-width: none;
+  }
+
+  .text-block__content :global(p) {
+    margin: 0 0 var(--space-4);
+    color: var(--color-text);
+  }
+
+  .text-block__content :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>
