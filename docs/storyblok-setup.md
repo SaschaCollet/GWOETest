@@ -32,6 +32,7 @@ exakt so eintragen.
 | `previous_value` | Text |
 | `trend` | Single-Option — Optionen: `up`, `down`, `neutral` |
 | `link_target` | Text |
+| `show_in_hero` | Boolean — steuert, ob diese Kachel oben in der "Auf einen Blick"-Übersicht erscheint (siehe Abschnitt 3a) |
 
 ### `kpi_grid`
 | Feld | Typ |
@@ -147,6 +148,17 @@ Die Navigation und die 4 Kennzahlen auf der Startseite verlinken auf `#klima`,
 optionales `anchor`-Feld aus und wrapped den Blok automatisch in `<div id="...">` — daher
 reicht es, das Feld nur bei `kpi_grid` und `materiality_matrix` anzulegen und bei den drei
 genannten Bloks zu setzen. Kein Code-Änderung pro Baustein nötig.
+
+---
+
+## 3a. Warum `show_in_hero`?
+
+Die 4 Kennzahlen ganz oben auf der Startseite ("Auf einen Blick") sind keine eigene
+Content-Liste mehr, sondern werden automatisch aus den `kpi_card`-Bausteinen im
+Body gesammelt — genau die, bei denen `show_in_hero` angehakt ist. Der Sprunglink
+kommt vom `anchor`-Feld des übergeordneten `kpi_grid`. Um die ursprünglichen 4
+Kennzahlen (CO₂, torffreie Substrate, Weiterbildung, Frauenanteil) wiederherzustellen,
+bei genau diesen 4 `kpi_card`-Instanzen `show_in_hero` aktivieren.
 
 ---
 
