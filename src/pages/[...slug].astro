@@ -5,8 +5,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
   const storyblokApi = useStoryblokApi();
+  // Lokal (astro dev) immer Draft für Live-Vorschau von Änderungen; in der Produktions-
+  // Build (z.B. auf Netlify) nur veröffentlichte Inhalte, damit unveröffentlichte Entwürfe
+  // nicht öffentlich sichtbar werden.
   const { data } = await storyblokApi.get('cdn/stories', {
-    version: 'draft',
+    version: import.meta.env.PROD ? 'published' : 'draft',
   });
 
   return data.stories.map((story: any) => ({
