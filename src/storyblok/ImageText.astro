@@ -1,0 +1,71 @@
+---
+import { storyblokEditable, renderRichText } from '@storyblok/astro';
+
+interface Props {
+  blok: {
+    title?: string;
+    image?: { filename?: string; alt?: string };
+    text?: unknown;
+    image_position?: 'left' | 'right';
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+const html = blok.text ? renderRichText(blok.text as never) : '';
+// Gleicher Storyblok-Fallstrick wie bei TextBlock.astro: leeres Single-Option-Feld
+// liefert "", nicht undefined — || statt ?? verwenden.
+const position = blok.image_position || 'left';
+---
+
+<section {...storyblokEditable(blok)} class="image-text container">
+  {blok.title && <h2>{blok.title}</h2>}
+  <div class={`image-text__grid image-text__grid--${position}`}>
+    {blok.image?.filename && (
+      <img
+        class="image-text__image"
+        src={blok.image.filename}
+        alt={blok.image.alt ?? ''}
+      />
+    )}
+    <div class="image-text__text" set:html={html} />
+  </div>
+</section>
+
+<style>
+  .image-text {
+    padding-block: var(--space-12);
+  }
+
+  .image-text__grid {
+    margin-top: var(--space-4);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .image-text__image {
+    width: 100%;
+    height: auto;
+  }
+
+  .image-text__text :global(p) {
+    margin: 0 0 var(--space-4);
+    color: var(--color-text);
+  }
+
+  .image-text__text :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .image-text__grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+
+    .image-text__grid--right .image-text__image {
+      order: 2;
+    }
+  }
+</style>
