@@ -120,17 +120,20 @@ löschen und folgende Bloks in dieser Reihenfolge in `body` hinzufügen (Inhalte
 [beispielbericht.md](beispielbericht.md)):
 
 1. **statement** — Intro-Zitat (Dr. Miriam Vogt)
-2. **kpi_grid** „Klimabilanz 2025" (4× `kpi_card`) — **`anchor` = `klima`**
-3. **chart_embed** „CO₂-Verlauf 2021–2025" — `embed_code` mit dem Datawrapper-Embed aus
+2. **image_text** „Über Florawerk" — `image_position` = `left`, beliebiges
+   Platzhalterbild hochladen
+3. **kpi_grid** „Klimabilanz 2025" (4× `kpi_card`) — **`anchor` = `klima`**
+4. **chart_embed** „CO₂-Verlauf 2021–2025" — `embed_code` mit dem Datawrapper-Embed aus
    Abschnitt 5 befüllen
-4. **timeline** „Meilensteine Klimastrategie" (5 Einträge 2021–2025)
-5. **accordion** „Häufige Fragen zur Klimabilanz" (3 Einträge)
-6. **kpi_grid** „Team 2025" (4× `kpi_card`) — **`anchor` = `mitarbeitende`**
-7. **statement** — Zitat Jonas Reiter
-8. **timeline** „Meilensteine Mitarbeitende" (4 Einträge)
-9. **accordion** „Häufige Fragen zu Mitarbeitenden" (2 Einträge)
-10. **materiality_matrix** „Wesentlichkeitsanalyse 2025" (8× `matrix_topic`) —
+5. **timeline** „Meilensteine Klimastrategie" (5 Einträge 2021–2025)
+6. **accordion** „Häufige Fragen zur Klimabilanz" (3 Einträge)
+7. **kpi_grid** „Team 2025" (4× `kpi_card`) — **`anchor` = `mitarbeitende`**
+8. **statement** — Zitat Jonas Reiter
+9. **timeline** „Meilensteine Mitarbeitende" (4 Einträge)
+10. **accordion** „Häufige Fragen zu Mitarbeitenden" (2 Einträge)
+11. **materiality_matrix** „Wesentlichkeitsanalyse 2025" (8× `matrix_topic`) —
     **`anchor` = `matrix`**
+12. **text_block** „Ausblick 2026" — `width` = `narrow`
 
 Alle konkreten Texte, Zahlen und die 8 Matrix-Themen mit x/y-Position stehen in
 [beispielbericht.md](beispielbericht.md) — dort einfach copy-pasten.

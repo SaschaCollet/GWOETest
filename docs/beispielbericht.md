@@ -25,6 +25,20 @@ Pflanzsubstraten und Gartenerde mit Sitz in Freiburg, ca. 220 Mitarbeitende.
 | Mitarbeitende mit Weiterbildung | 92 % | 81 % | ↑ rauf (gut) | #mitarbeitende |
 | Frauenanteil in Führungspositionen | 41 % | 33 % | ↑ rauf (gut) | #mitarbeitende |
 
+### Bild+Text „Über Florawerk" (Baustein: image_text, image_position: left)
+
+**Titel:** Über Florawerk
+**Bild:** Werksaufnahme oder Produktfoto (beliebiges Platzhalterbild hochladen, z. B.
+Substrat-/Gartenerde-Motiv), Alt-Text: „Produktionshalle von Florawerk in Freiburg"
+**Text:**
+> Florawerk GmbH stellt seit 1987 Pflanzsubstrate und Gartenerde für den Hobby- und
+> Profigartenbau her. Am Hauptsitz in Freiburg und einem zweiten Werk in Lahr
+> beschäftigt das Unternehmen heute rund 220 Mitarbeitende.
+>
+> Der vorliegende Bericht dokumentiert die wichtigsten Kennzahlen und Fortschritte des
+> Geschäftsjahres 2025 entlang der drei Schwerpunkte Klima, Mitarbeitende und
+> Wesentlichkeit.
+
 ---
 
 ## Kapitel: Klima (`#klima`)
@@ -125,6 +139,15 @@ Produktionsmenge. Werte 2021–2024 testiert, 2025 vorläufig.
 | Verpackungsmaterial | 65 | 45 | Kunststoffanteil in Sackware, Recyclingfähigkeit |
 | Lieferketten-Transparenz | 60 | 65 | Herkunftsnachweis für Kompost- und Holzfaser-Lieferanten |
 | Lokale Biodiversität an Standorten | 35 | 40 | Randthema, aber wachsendes Stakeholder-Interesse |
+
+### Text „Ausblick 2026" (Baustein: text_block, width: narrow)
+
+**Titel:** Ausblick 2026
+**Text:**
+> Für 2026 hat sich Florawerk drei Schwerpunkte gesetzt: die torffreie Produktion auf
+> 85 % auszuweiten, die Wasserrückgewinnung am Standort Lahr in Betrieb zu nehmen und
+> die Weiterbildungsquote auf über 95 % zu steigern. Der nächste Nachhaltigkeitsbericht
+> erscheint im Frühjahr 2027.
 
 ---
 
