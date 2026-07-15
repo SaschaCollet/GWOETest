@@ -2,7 +2,7 @@
 interface Kpi {
   label: string;
   value: string;
-  href: string;
+  href?: string;
 }
 
 interface Props {
@@ -23,7 +23,7 @@ const { title, subtitle, kpis } = Astro.props;
       {
         kpis.map((kpi) => (
           <li>
-            <a class="hero__kpi" href={kpi.href}>
+            <a class="hero__kpi" href={kpi.href ?? '#main-content'}>
               <span class="hero__kpi-value">{kpi.value}</span>
               <span class="hero__kpi-label">{kpi.label}</span>
             </a>
