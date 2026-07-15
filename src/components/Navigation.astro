@@ -1,5 +1,6 @@
 ---
 import ScrollProgress from './ScrollProgress.astro';
+import Logo from './Logo.astro';
 
 interface Chapter {
   id: string;
@@ -17,7 +18,9 @@ const { chapters, reportTitle = 'Nachhaltigkeitsbericht 2025' } = Astro.props;
 <header class="site-header">
   <nav class="site-nav" aria-label="Kapitel-Navigation">
     <div class="site-nav__bar container">
-      <a href="#main-content" class="site-nav__brand">{reportTitle}</a>
+      <a href="#main-content" class="site-nav__brand">
+        <Logo fallbackText={reportTitle} height="2rem" />
+      </a>
 
       <button
         type="button"
