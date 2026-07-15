@@ -91,10 +91,25 @@ exakt so eintragen.
 | `topics` | Blocks — Restrict to: `matrix_topic` |
 | `anchor` | Text (optional — erzeugt Sprungziel, siehe Abschnitt 3) |
 
+### `text_block`
+| Feld | Typ |
+|---|---|
+| `title` | Text (optional) |
+| `content` | Richtext |
+| `width` | Single-Option — Optionen: `narrow`, `full` |
+
+### `image_text`
+| Feld | Typ |
+|---|---|
+| `title` | Text (optional) |
+| `image` | Asset (Single) |
+| `text` | Richtext |
+| `image_position` | Single-Option — Optionen: `left`, `right` |
+
 ### `page` (bereits vorhanden, ggf. prüfen)
 | Feld | Typ |
 |---|---|
-| `body` | Blocks — Restrict to: `teaser`, `statement`, `kpi_grid`, `chart_embed`, `accordion`, `timeline`, `materiality_matrix` |
+| `body` | Blocks — Restrict to: `teaser`, `statement`, `kpi_grid`, `chart_embed`, `accordion`, `timeline`, `materiality_matrix`, `text_block`, `image_text` |
 
 ---
 
