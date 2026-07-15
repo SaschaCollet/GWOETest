@@ -18,12 +18,33 @@ const chapters = [
   { id: 'matrix', label: 'Wesentlichkeit' },
 ];
 
-const kpis = [
-  { label: 'CO₂-Emissionen (Scope 1+2)', value: '1.240 t', href: '#klima' },
-  { label: 'Anteil torffreie Substrate', value: '78 %', href: '#klima' },
-  { label: 'Mitarbeitende mit Weiterbildung', value: '92 %', href: '#mitarbeitende' },
-  { label: 'Frauenanteil in Führungspositionen', value: '41 %', href: '#mitarbeitende' },
-];
+/**
+ * Hero-Kennzahlen kommen jetzt direkt aus den kpi_card-Bausteinen im Body statt aus
+ * einer separat gepflegten Liste — verhindert, dass die Übersicht oben und die
+ * Kacheln im jeweiligen Kapitel auseinanderlaufen. Ein Redakteur markiert in
+ * Storyblok die gewünschten Kacheln über das Feld "show_in_hero" (Boolean).
+ */
+function collectHeroKpis(body: any[] = []) {
+  const kpis: { label: string; value: string; href?: string }[] = [];
+
+  for (const item of body) {
+    if (item.component !== 'kpi_grid') continue;
+
+    for (const card of item.cards ?? []) {
+      if (!card.show_in_hero) continue;
+
+      kpis.push({
+        label: card.label,
+        value: card.unit ? `${card.value} ${card.unit}` : card.value,
+        href: item.anchor ? `#${item.anchor}` : undefined,
+      });
+    }
+  }
+
+  return kpis;
+}
+
+const kpis = collectHeroKpis(blok.body);
 ---
 
 <Navigation chapters={chapters} />
