@@ -107,6 +107,17 @@ exakt so eintragen.
 | `text` | Richtext |
 | `image_position` | Single-Option — Optionen: `left`, `right` |
 
+### `settings` (Root-Content-Type, kein Nestable Block — eine Story mit Slug `settings`)
+| Feld | Typ |
+|---|---|
+| `font_heading` | Single-Option — Optionen: `serif_classic`, `serif_modern`, `sans_classic`, `sans_modern` |
+| `font_body` | Single-Option — gleiche Optionen |
+| `color_primary` | Text (Hex-Farbwert) |
+| `color_secondary` | Text (Hex-Farbwert) |
+| `logo` | Asset (Single) |
+
+Details und Kontrastprüfung: siehe [docs/branding.md](branding.md).
+
 ### `page` (bereits vorhanden, ggf. prüfen)
 | Feld | Typ |
 |---|---|

@@ -1,23 +1,28 @@
 # Branding anpassen (neues Kundenprojekt)
 
-Drei Stellen, um dieses Template für einen neuen Kunden umzufärben: Farben,
-Schriften, Logo. Kein Build-Schritt, kein Konfigurationsfile — alles direkt in den
-unten genannten Dateien.
+Farben, Schriften und Logo werden über eine globale Storyblok-Story gesteuert
+(Content-Type `settings`, Slug `settings`) — Redakteur:innen können sie ohne
+Code-Zugriff ändern. Änderungen erscheinen nach einem Browser-Reload, ohne
+Neustart nötig (Storyblok-Cache ist deaktiviert, siehe `astro.config.mjs`).
+
+## Story `settings` anlegen
+
+Falls noch nicht vorhanden: Content-Type `settings` (Root, nicht Nestable) mit
+folgenden Feldern anlegen, dann eine Story mit Slug `settings` erstellen:
+
+| Feld | Typ |
+|---|---|
+| `font_heading` | Single-Option — Optionen: `serif_classic`, `serif_modern`, `sans_classic`, `sans_modern` |
+| `font_body` | Single-Option — gleiche Optionen |
+| `color_primary` | Text (Hex-Farbwert, z. B. `#1f6f78`) |
+| `color_secondary` | Text (Hex-Farbwert) |
+| `logo` | Asset (Single) |
 
 ## Farben
 
-Datei: `src/styles/tokens.css`, Block `:root { ... }`, Abschnitt "Farben — HIER
-Kundenfarben eintragen":
-
-- `--color-primary` — Hauptfarbe (Buttons, Zahlen, Akzente)
-- `--color-primary-dark` / `--color-primary-light` — Abstufungen der Hauptfarbe
-- `--color-secondary` — zweite Markenfarbe
-- `--color-accent` — nur für Fokus-Ringe (Tastatur-Bedienbarkeit), unabhängig von
-  Primär-/Sekundärfarbe
-
-**Wichtig — Kontrast prüfen:** Neue Farben müssen als Text auf hellem/dunklem
-Hintergrund lesbar bleiben (WCAG AA, mindestens 4.5:1 für normalen Text). Mit
-folgendem Python-Snippet prüfen (Werte anpassen):
+`color_primary` / `color_secondary` in der `settings`-Story setzen. **Wichtig —
+Kontrast prüfen:** Storyblok validiert das nicht automatisch. Neue Farben vor dem
+Speichern mit folgendem Snippet gegen WCAG AA (mindestens 4.5:1) prüfen:
 
 ```bash
 python3 << 'EOF'
@@ -35,41 +40,30 @@ def contrast(a, b):
     hi, lo = max(l1, l2), min(l1, l2)
     return (hi + 0.05) / (lo + 0.05)
 
-# Neue Primärfarbe gegen Hintergrund prüfen (Beispielwerte anpassen):
 print(contrast("#1f6f78", "#ffffff"))  # sollte >= 4.5 sein
 EOF
 ```
 
-Der `@media (prefers-color-scheme: dark)`-Block weiter unten in derselben Datei
-überschreibt einzelne Farben fürs Dark Mode — bei einer neuen Primärfarbe dort
-prüfen, ob die (meist hellere) Dark-Mode-Variante ebenfalls noch 4.5:1 auf dem
-dunklen Hintergrund erreicht.
+`--color-accent` (nur Fokus-Ringe/Tastaturbedienbarkeit) bleibt bewusst Code-only
+(`src/styles/tokens.css`) — nicht Teil der Storyblok-Einstellungen.
 
 ## Schriften
 
-Gleiche Datei, gleicher Block:
-
-- `--font-heading` — Überschriften
-- `--font-body` — Fließtext
-
-Dieses Template lädt **keine externen Web-Fonts** (kein Google Fonts, kein eigenes
-`@font-face`) — nur Schriftnamen eintragen, die auf dem Zielsystem bereits verfügbar
-sind (System-Schriften wie `-apple-system`, oder verbreitete, meist vorinstallierte
-Schriften wie `Georgia`, `Times New Roman`, `Arial`). Web-Font-Loading wäre eine
-größere Erweiterung (Font-Dateien einbinden, `<link>`/`@font-face` in
-`src/layouts/BaseLayout.astro` ergänzen) und ist bewusst nicht Teil dieses Templates.
+`font_heading` / `font_body` in der `settings`-Story per Dropdown wählen. Nur die
+vier vorgeprüften, sicheren System-Font-Stacks stehen zur Auswahl (siehe Tabelle
+oben) — kein Laden externer Web-Fonts.
 
 ## Logo
 
-Datei `public/logo.svg` ablegen (SVG empfohlen — verlustfrei skalierbar). Die
-`Logo`-Komponente (`src/components/Logo.astro`) erkennt die Datei automatisch beim
-nächsten Build und zeigt sie in Navigation und Footer an. Ohne diese Datei zeigt das
-Template automatisch den Berichtstitel als Text — kein Platzhalterbild nötig, das
-Template funktioniert auch ganz ohne Logo.
+Bild im `logo`-Asset-Feld der `settings`-Story hochladen. Ist kein Bild gesetzt,
+zeigt das Template automatisch den Berichtstitel als Text (Navigation) bzw.
+"Florawerk GmbH" (Footer) — kein Platzhalterbild nötig.
 
 ## Weitere Textinhalte
 
-Berichtstitel, Kapitel-Namen und die Startseiten-Kennzahlen sind aktuell **nicht**
-über Storyblok steuerbar, sondern fest in `src/storyblok/Page.astro` eingetragen
-(Variablen `chapters`, `kpis`, sowie der `title`-Prop an `<HeroOverview>`) — für ein
-neues Kundenprojekt dort manuell anpassen.
+Berichtstitel, Kapitel-Namen und die Zuordnung der Startseiten-Kennzahlen sind
+weiterhin **nicht** über Storyblok steuerbar, sondern fest in
+`src/storyblok/Page.astro` eingetragen (Variablen `chapters`, `title`-Prop an
+`<HeroOverview>`) — für ein neues Kundenprojekt dort manuell anpassen. Welche
+KPI-Kacheln im Hero erscheinen, wird über das `show_in_hero`-Feld an `kpi_card`
+gesteuert (siehe `docs/storyblok-setup.md`, Abschnitt 3a).
