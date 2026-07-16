@@ -1,11 +1,17 @@
 ---
 import Logo from './Logo.astro';
+
+interface Props {
+  logoSrc?: string;
+}
+
+const { logoSrc } = Astro.props;
 ---
 
 <footer class="site-footer">
   <div class="container site-footer__row">
     <div class="site-footer__brand">
-      <Logo fallbackText="Florawerk GmbH" height="1.5rem" />
+      <Logo fallbackText="Florawerk GmbH" height="1.5rem" src={logoSrc} />
       <p>&copy; {new Date().getFullYear()} Florawerk GmbH</p>
     </div>
 

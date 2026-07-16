@@ -1,19 +1,16 @@
 ---
-import fs from 'node:fs';
-import path from 'node:path';
-
 interface Props {
   fallbackText: string;
   height?: string;
+  src?: string;
 }
 
-const { fallbackText, height = '2rem' } = Astro.props;
-const hasLogo = fs.existsSync(path.join(process.cwd(), 'public/logo.svg'));
+const { fallbackText, height = '2rem', src } = Astro.props;
 ---
 
 {
-  hasLogo ? (
-    <img src="/logo.svg" alt={fallbackText} style={`height: ${height}; width: auto;`} />
+  src ? (
+    <img src={src} alt={fallbackText} style={`height: ${height}; width: auto;`} />
   ) : (
     <span>{fallbackText}</span>
   )
