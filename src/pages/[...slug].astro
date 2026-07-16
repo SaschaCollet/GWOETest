@@ -10,6 +10,9 @@ export async function getStaticPaths() {
   // nicht öffentlich sichtbar werden.
   const { data } = await storyblokApi.get('cdn/stories', {
     version: import.meta.env.PROD ? 'published' : 'draft',
+    // Verhindert, dass die globale Branding-Story als eigene (kaputte) Seite
+    // gerendert wird — sie hat keinen registrierten "page"-kompatiblen Component-Typ.
+    excluding_slugs: 'settings',
   });
 
   return data.stories.map((story: any) => ({
