@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { getSiteSettings, resolveFontStack } from '../lib/settings';
 
 interface Props {
   title: string;
@@ -7,10 +8,20 @@ interface Props {
 }
 
 const { title, description = 'Florawerk GmbH — Nachhaltigkeitsbericht' } = Astro.props;
+
+const settings = await getSiteSettings();
+const overrides: string[] = [];
+const fontHeading = resolveFontStack(settings?.font_heading);
+const fontBody = resolveFontStack(settings?.font_body);
+if (fontHeading) overrides.push(`--font-heading: ${fontHeading};`);
+if (fontBody) overrides.push(`--font-body: ${fontBody};`);
+if (settings?.color_primary) overrides.push(`--color-primary: ${settings.color_primary};`);
+if (settings?.color_secondary) overrides.push(`--color-secondary: ${settings.color_secondary};`);
+const styleOverride = overrides.length > 0 ? overrides.join(' ') : undefined;
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang="de" style={styleOverride}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
