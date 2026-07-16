@@ -4,8 +4,14 @@ import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
 import Navigation from '../components/Navigation.astro';
 import HeroOverview from '../components/HeroOverview.astro';
 import Footer from '../components/Footer.astro';
+import { getSiteSettings } from '../lib/settings';
 
 const { blok } = Astro.props;
+
+const settings = await getSiteSettings();
+// Storyblok liefert ein leeres Asset-Feld mit filename: "" statt null/undefined —
+// gleicher Fallstrick wie bei leeren Single-Option-Feldern, deshalb || statt ??.
+const logoSrc = settings?.logo?.filename || undefined;
 
 /**
  * Rahmen/Shell ist nicht CMS-gebunden (siehe AGENTS.md) und daher hier fest verdrahtet
@@ -47,7 +53,7 @@ function collectHeroKpis(body: any[] = []) {
 const kpis = collectHeroKpis(blok.body);
 ---
 
-<Navigation chapters={chapters} />
+<Navigation chapters={chapters} logoSrc={logoSrc} />
 <HeroOverview
   title="Nachhaltigkeitsbericht 2025"
   subtitle="Florawerk GmbH — Verantwortung für Boden, Klima und Menschen"
@@ -72,4 +78,4 @@ const kpis = collectHeroKpis(blok.body);
     )
   }
 </main>
-<Footer />
+<Footer logoSrc={logoSrc} />
