@@ -161,8 +161,15 @@ const activeLabel = SCALE[activeIndex].label;
 
   .stakeholder__scale-item {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex: 1 1 0;
     min-width: 4rem;
+    /* Feste Mindesthöhe statt Flex-Stretch: alle inaktiven Kästen bleiben dadurch
+       untereinander gleich hoch, unabhängig davon, ob ihr Text ein- oder zweizeilig
+       umbricht. Nur der aktive Kasten bekommt unten eine eigene, größere Höhe. */
+    min-height: 3.5rem;
     padding: var(--space-2) var(--space-1);
     background: var(--color-primary-light);
     color: var(--color-text);
@@ -173,9 +180,8 @@ const activeLabel = SCALE[activeIndex].label;
   }
 
   .stakeholder__scale-item[data-active='true'] {
-    display: flex;
     flex-direction: column;
-    justify-content: center;
+    min-height: 5.5rem;
     padding-block: var(--space-4);
     background: var(--color-secondary);
     color: var(--color-neutral-0);
