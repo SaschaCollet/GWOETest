@@ -118,10 +118,22 @@ exakt so eintragen.
 
 Details und Kontrastprüfung: siehe [docs/branding.md](branding.md).
 
+### `stakeholder_block`
+| Feld | Typ |
+|---|---|
+| `category_label` | Text — z. B. „Lieferant*innen:" |
+| `headline` | Text |
+| `text` | Richtext |
+| `link_text` | Text — z. B. „Im Gesamtbericht weiterlesen…" |
+| `link_url` | Text |
+| `image` | Asset (Single) |
+| `image_position` | Single-Option — Optionen: `left`, `right` |
+| `audit_score` | Number (kann negativ sein) — Skala mit festen Stufengrenzen im Code (`StakeholderBlock.astro`): <0 Negativbereich · 0 Basislinie · 1–16 Erste Schritte · 17–33 Fortgeschritten · 34–65 Erfahren · 66–100 Vorbildlich |
+
 ### `page` (bereits vorhanden, ggf. prüfen)
 | Feld | Typ |
 |---|---|
-| `body` | Blocks — Restrict to: `teaser`, `statement`, `kpi_grid`, `chart_embed`, `accordion`, `timeline`, `materiality_matrix`, `text_block`, `image_text` |
+| `body` | Blocks — Restrict to: `teaser`, `statement`, `kpi_grid`, `chart_embed`, `accordion`, `timeline`, `materiality_matrix`, `text_block`, `image_text`, `stakeholder_block` |
 
 ---
 
