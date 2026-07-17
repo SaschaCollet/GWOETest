@@ -1,0 +1,203 @@
+---
+import { storyblokEditable, renderRichText } from '@storyblok/astro';
+
+interface Props {
+  blok: {
+    category_label?: string;
+    headline?: string;
+    text?: unknown;
+    link_text?: string;
+    link_url?: string;
+    image?: { filename?: string; alt?: string };
+    image_position?: 'left' | 'right';
+    audit_score?: number;
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+const html = blok.text ? renderRichText(blok.text as never) : '';
+// Gleicher Storyblok-Fallstrick wie bei ImageText.astro: leeres Single-Option-Feld
+// liefert "", nicht undefined — || statt ?? verwenden.
+const position = blok.image_position || 'left';
+
+/**
+ * Stufengrenzen der Audit-Skala liegen bewusst im Code, nicht in Storyblok
+ * (Nutzer-Vorgabe: "im Backend festgelegt"). Reihenfolge = Anzeigereihenfolge.
+ */
+const SCALE = [
+  { label: 'Negativbereich' },
+  { label: 'Basislinie' },
+  { label: 'Erste Schritte' },
+  { label: 'Fortgeschritten' },
+  { label: 'Erfahren' },
+  { label: 'Vorbildlich' },
+];
+
+function getActiveScaleIndex(score: number): number {
+  if (score < 0) return 0;
+  if (score === 0) return 1;
+  if (score <= 16) return 2;
+  if (score <= 33) return 3;
+  if (score <= 65) return 4;
+  return 5;
+}
+
+const score = Number(blok.audit_score) || 0;
+const activeIndex = getActiveScaleIndex(score);
+const activeLabel = SCALE[activeIndex].label;
+---
+
+<section {...storyblokEditable(blok)} class="stakeholder container">
+  <div class={`stakeholder__grid stakeholder__grid--${position}`}>
+    {
+      blok.image?.filename && (
+        <img
+          class="stakeholder__image"
+          src={blok.image.filename}
+          alt={blok.image.alt ?? ''}
+        />
+      )
+    }
+    <div class="stakeholder__content">
+      {blok.category_label && <p class="stakeholder__label">{blok.category_label}</p>}
+      {blok.headline && <h2>{blok.headline}</h2>}
+      <div class="stakeholder__text" set:html={html} />
+      {
+        blok.link_url && blok.link_text && (
+          <p>
+            <a class="stakeholder__link" href={blok.link_url}>
+              {blok.link_text}
+            </a>
+          </p>
+        )
+      }
+
+      <div class="stakeholder__scale-wrap">
+        <p class="stakeholder__scale-label">Auditbewertung:</p>
+        <ul
+          role="list"
+          class="stakeholder__scale"
+          aria-label={`Auditbewertung: ${score} Prozent, ${activeLabel}`}
+        >
+          {
+            SCALE.map((step, index) => (
+              <li
+                class="stakeholder__scale-item"
+                data-active={index === activeIndex ? 'true' : undefined}
+                aria-current={index === activeIndex ? 'true' : undefined}
+              >
+                {index === activeIndex && (
+                  <span class="stakeholder__scale-pointer" aria-hidden="true">
+                    ▼
+                  </span>
+                )}
+                {index === activeIndex ? (
+                  <>
+                    <strong class="stakeholder__scale-value">{score}%</strong>
+                    <span class="stakeholder__scale-text">{step.label}</span>
+                  </>
+                ) : (
+                  step.label
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stakeholder {
+    padding-block: var(--space-12);
+  }
+
+  .stakeholder__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .stakeholder__image {
+    width: 100%;
+    height: auto;
+  }
+
+  .stakeholder__label {
+    margin: 0 0 var(--space-2);
+    color: var(--color-text-muted);
+  }
+
+  .stakeholder__text :global(p) {
+    margin: 0 0 var(--space-4);
+    color: var(--color-text);
+  }
+
+  .stakeholder__text :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .stakeholder__link {
+    font-weight: 600;
+  }
+
+  .stakeholder__scale-wrap {
+    margin-top: var(--space-6);
+  }
+
+  .stakeholder__scale-label {
+    margin: 0 0 var(--space-2);
+    font-weight: 600;
+  }
+
+  .stakeholder__scale {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .stakeholder__scale-item {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 6rem;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-primary-light);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    text-align: center;
+  }
+
+  .stakeholder__scale-item[data-active='true'] {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-secondary);
+    color: var(--color-neutral-0);
+    font-weight: 600;
+  }
+
+  .stakeholder__scale-value {
+    font-size: var(--font-size-lg);
+  }
+
+  .stakeholder__scale-pointer {
+    position: absolute;
+    top: -1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-accent);
+    font-size: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    .stakeholder__grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+
+    .stakeholder__grid--right .stakeholder__image {
+      order: 2;
+    }
+  }
+</style>
