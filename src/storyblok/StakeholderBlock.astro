@@ -154,6 +154,7 @@ const activeLabel = SCALE[activeIndex].label;
 
   .stakeholder__scale {
     display: flex;
+    align-items: flex-end;
     flex-wrap: wrap;
     gap: var(--space-2);
   }
@@ -161,17 +162,21 @@ const activeLabel = SCALE[activeIndex].label;
   .stakeholder__scale-item {
     position: relative;
     flex: 1 1 0;
-    min-width: 6rem;
-    padding: var(--space-2) var(--space-3);
+    min-width: 4rem;
+    padding: var(--space-2) var(--space-1);
     background: var(--color-primary-light);
     color: var(--color-text);
     font-size: var(--font-size-sm);
     text-align: center;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .stakeholder__scale-item[data-active='true'] {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    padding-block: var(--space-4);
     background: var(--color-secondary);
     color: var(--color-neutral-0);
     font-weight: 600;
