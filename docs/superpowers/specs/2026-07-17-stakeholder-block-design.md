@@ -28,8 +28,8 @@ Entscheidung des Nutzers: "im Backend festgelegt"):
 | < 0 | Negativbereich |
 | 0 | Basislinie |
 | 1–16 | Erste Schritte |
-| 17–32 | Fortgeschritten |
-| 33–65 | Erfahren |
+| 17–33 | Fortgeschritten |
+| 34–65 | Erfahren |
 | 66–100 | Vorbildlich |
 
 Alle 6 Segmente werden **gleich breit** dargestellt (wie in der Bildvorlage), nicht
@@ -69,8 +69,8 @@ identisches Verhalten zu `image_text`.
 ## Verifikation
 
 - `npm run build` fehlerfrei
-- Smoke-Test mit mehreren `audit_score`-Werten (negativ, 0, 16, 17, 65, 66, 100),
-  prüfen dass jeweils die korrekte Stufe hervorgehoben wird
+- Smoke-Test mit mehreren `audit_score`-Werten (negativ, 0, 16, 17, 33, 34, 65, 66,
+  100), prüfen dass jeweils die korrekte Stufe hervorgehoben wird
 - Test mit `image_position: left` und `right`
 - Live-Check auf `https://localhost:4321/`, sobald der Nutzer eine Instanz mit
   echten Inhalten in die Story einträgt
