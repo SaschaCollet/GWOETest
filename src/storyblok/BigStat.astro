@@ -1,0 +1,45 @@
+---
+import { storyblokEditable, renderRichText } from '@storyblok/astro';
+
+interface Props {
+  blok: {
+    value?: string;
+    caption?: unknown;
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+const html = blok.caption ? renderRichText(blok.caption as never) : '';
+---
+
+<section {...storyblokEditable(blok)} class="big-stat container">
+  <p class="big-stat__value">{blok.value}</p>
+  <div class="big-stat__caption" set:html={html} />
+</section>
+
+<style>
+  .big-stat {
+    padding-block: var(--space-12);
+    text-align: center;
+  }
+
+  .big-stat__value {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    line-height: var(--line-height-tight);
+    color: var(--color-primary);
+  }
+
+  .big-stat__caption {
+    margin-top: var(--space-2);
+    max-width: 32rem;
+    margin-inline: auto;
+    color: var(--color-text-muted);
+  }
+
+  .big-stat__caption :global(p) {
+    margin: 0;
+  }
+</style>

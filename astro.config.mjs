@@ -34,6 +34,7 @@ export default defineConfig({
         text_block: 'storyblok/TextBlock',
         image_text: 'storyblok/ImageText',
         stakeholder_block: 'storyblok/StakeholderBlock',
+        big_stat: 'storyblok/BigStat',
       },
       // Fängt Bloks aus altem Space-Startinhalt (z. B. "grid"/"feature") ab, die wir in
       // diesem Template nicht bauen — verhindert einen Build-Abbruch statt Fehler zu werfen.
