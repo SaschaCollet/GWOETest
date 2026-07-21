@@ -1,4 +1,4 @@
-# Florawerk Nachhaltigkeitsbericht — Astro + Storyblok Template
+# Florawerk Gemeinwohlbericht — Astro + Storyblok Template
 
 Wiederverwendbares Template für digitale Nachhaltigkeitsberichte: ein einseitiger,
 scrollbarer Bericht mit Kapitel-Navigation, aufgebaut aus Storyblok-editierbaren

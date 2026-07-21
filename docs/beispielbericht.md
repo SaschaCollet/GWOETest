@@ -1,4 +1,4 @@
-# Florawerk GmbH — Nachhaltigkeitsbericht 2025 (Beispielinhalt)
+# Florawerk GmbH — Gemeinwohlbericht 2025 (Beispielinhalt)
 
 Fiktiver Referenzinhalt für den Testlauf. Dient als Platzhalter-Content, der in Schritt 8
 in die Storyblok-Stories eingetragen wird. Florawerk GmbH ist ein fiktiver Hersteller von
@@ -8,7 +8,7 @@ Pflanzsubstraten und Gartenerde mit Sitz in Freiburg, ca. 220 Mitarbeitende.
 
 ## Seite: Home (Auf einen Blick)
 
-**Titel:** Nachhaltigkeitsbericht 2025
+**Titel:** Gemeinwohlbericht 2025
 **Untertitel:** Florawerk GmbH — Verantwortung für Boden, Klima und Menschen
 
 **Einleitungs-Statement (Baustein: Statement):**

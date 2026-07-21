@@ -1,6 +1,6 @@
 ## Projekt
 
-Florawerk GmbH — Nachhaltigkeitsbericht 2025: ein lokal sichtbarer Beispielbericht als
+Florawerk GmbH — Gemeinwohlbericht 2025: ein lokal sichtbarer Beispielbericht als
 wiederverwendbares Template. Stack: Astro + Storyblok (Headless CMS, EU-Region). Kein
 Deployment nötig, lokale Vorschau im Browser reicht. Sprache: nur Deutsch, kein i18n.
 
