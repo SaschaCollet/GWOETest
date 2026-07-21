@@ -1,0 +1,108 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+
+interface BarChartItem {
+  _uid: string;
+  _editable?: string;
+  icon?: { filename?: string; alt?: string };
+  label?: string;
+  value?: string | number;
+  value_label?: string;
+  [key: string]: unknown;
+}
+
+interface Props {
+  blok: {
+    title?: string;
+    bars?: BarChartItem[];
+    [key: string]: unknown;
+  };
+}
+
+const { blok } = Astro.props;
+const bars = blok.bars ?? [];
+const maxValue = Math.max(0, ...bars.map((bar) => Number(bar.value) || 0));
+
+function widthPercent(bar: BarChartItem): number {
+  const value = Number(bar.value) || 0;
+  return maxValue > 0 ? (value / maxValue) * 100 : 0;
+}
+---
+
+<section {...storyblokEditable(blok)} class="bar-chart container">
+  {blok.title && <h2>{blok.title}</h2>}
+  <ul role="list" class="bar-chart__list">
+    {
+      bars.map((bar) => (
+        <li class="bar-chart__row" {...storyblokEditable(bar)}>
+          <div class="bar-chart__icon-col">
+            {bar.icon?.filename && (
+              <img class="bar-chart__icon" src={bar.icon.filename} alt={bar.icon.alt ?? ''} />
+            )}
+            <span class="bar-chart__icon-label">{bar.label}</span>
+          </div>
+          <div class="bar-chart__track">
+            <div class="bar-chart__fill" style={`width: ${widthPercent(bar)}%`} aria-hidden="true" />
+          </div>
+          <span class="bar-chart__value">{bar.value_label}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .bar-chart {
+    padding-block: var(--space-12);
+  }
+
+  .bar-chart__list {
+    margin-top: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .bar-chart__row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .bar-chart__icon-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    width: 4rem;
+  }
+
+  .bar-chart__icon {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+  }
+
+  .bar-chart__icon-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  .bar-chart__track {
+    height: 0.75rem;
+    background: var(--color-primary-light);
+  }
+
+  .bar-chart__fill {
+    height: 100%;
+    background: var(--color-primary);
+  }
+
+  .bar-chart__value {
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+</style>
