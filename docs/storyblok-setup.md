@@ -130,10 +130,30 @@ Details und Kontrastprüfung: siehe [docs/branding.md](branding.md).
 | `image_position` | Single-Option — Optionen: `left`, `right` |
 | `audit_score` | Number (kann negativ sein) — Skala mit festen Stufengrenzen im Code (`StakeholderBlock.astro`): <0 Negativbereich · 0 Basislinie · 1–16 Erste Schritte · 17–33 Fortgeschritten · 34–65 Erfahren · 66–100 Vorbildlich |
 
+### `big_stat`
+| Feld | Typ |
+|---|---|
+| `value` | Text — die große Zahl, z. B. „100%" |
+| `caption` | Richtext |
+
+### `bar_chart_item`
+| Feld | Typ |
+|---|---|
+| `icon` | Asset (Single) |
+| `label` | Text |
+| `value` | Number |
+| `value_label` | Text |
+
+### `bar_chart`
+| Feld | Typ |
+|---|---|
+| `title` | Text (optional) |
+| `bars` | Blocks — Restrict to: `bar_chart_item` |
+
 ### `page` (bereits vorhanden, ggf. prüfen)
 | Feld | Typ |
 |---|---|
-| `body` | Blocks — Restrict to: `teaser`, `statement`, `kpi_grid`, `chart_embed`, `accordion`, `timeline`, `materiality_matrix`, `text_block`, `image_text`, `stakeholder_block` |
+| `body` | Blocks — Restrict to: `teaser`, `statement`, `kpi_grid`, `chart_embed`, `accordion`, `timeline`, `materiality_matrix`, `text_block`, `image_text`, `stakeholder_block`, `big_stat`, `bar_chart` |
 
 ---
 
